@@ -17,7 +17,7 @@ export const Login = () => {
         <input
           className='mb-6 px-4 py-3 rounded-sm w-full'
           type='text'
-          placeholder='Username'
+          placeholder='Email'
         />
         <input
           className='mb-10 px-4 py-3 rounded-sm w-full'
