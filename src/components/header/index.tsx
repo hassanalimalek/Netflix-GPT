@@ -1,14 +1,86 @@
+import { useEffect, useReducer, useRef, useState } from 'react';
 import LogoImg from '../../assets/logo.png';
+import AvatarImg from '../../assets/avatar-img.webp';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../services/firebaseConfig';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, logout } from '../../store/userSlice';
+import { useNavigate } from 'react-router-dom';
 export const Header = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        console.log('user', user);
+        dispatch(
+          login({
+            email: user?.email,
+            uid: user?.uid,
+            displayName: user?.displayName,
+          })
+        );
+        navigate('/');
+      } else {
+        navigate('/login');
+      }
+    });
+  }, []);
+
+  const signOut = () => {
+    auth.signOut();
+    dispatch(logout());
+  };
   return (
-    <div>
+    <div className='w-full absolute flex justify-between' ref={dropdownRef}>
       <img
-        className='absolute top-0 left-0 w-40 mt-4 ml-4 z-10'
+        className=' top-0 left-0 w-40 mt-4 ml-4 z-10'
         src={LogoImg}
         alt='Logo'
         width={190}
         height={160}
       />
+      {user && (
+        <>
+          <img
+            className='w-12 h-12 mt-4 mr-4 cursor-pointer'
+            src={AvatarImg}
+            onClick={() => {
+              setIsDropdownOpen(!isDropdownOpen);
+            }}
+          ></img>
+          {isDropdownOpen && (
+            <div className='absolute top-16 pt-1 right-0 bg-white px-2'>
+              <div className='z-10 text-white bg-red-500 border border-red divide-y divide-gray-100 rounded-md  shadow w-44 dark:bg-gray-700'>
+                <button
+                  onClick={signOut}
+                  className='w-full block px-4 py-2 hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'
+                >
+                  Sign Out
+                </button>
+              </div>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 };
