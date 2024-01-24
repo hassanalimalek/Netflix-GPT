@@ -1,15 +1,11 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
-
-import { FaPlay } from 'react-icons/fa';
 import { IoPlay, IoInformationCircleOutline } from 'react-icons/io5';
 
 export default function Hero({ mainHeaderMovieData }) {
   const mainHeaderMovieTrailerData = useSelector(
     (state: any) => state.movies.mainHeaderMovieTrailerData
   );
-  console.log('mainHeaderMovieData -->', mainHeaderMovieData);
-  console.log('mainHeaderMovieTrailerData -->', mainHeaderMovieTrailerData);
+
   if (!mainHeaderMovieData) return null;
   return (
     <div>
@@ -18,15 +14,15 @@ export default function Hero({ mainHeaderMovieData }) {
           <h1 className='text-5xl mb-4 font-bold'>
             {mainHeaderMovieData?.title}
           </h1>
-          <p className='mb-6 w-2/6'>{mainHeaderMovieData?.overview}</p>
+          <p className='mb-6 text-lg w-2/6'>{mainHeaderMovieData?.overview}</p>
           <div className='flex gap-3 '>
-            <button className='text-black flex gap-2 justify-center px-6 py-2 rounded-md border bg-[#FEFEFE]'>
+            <button className='text-black flex gap-2 justify-center px-6 py-2 rounded-md border transition-all bg-[#FEFEFE] hover:bg-[#d8d8d8]'>
               <IoPlay className='text-2xl' />
-              <span className='font-medium'>Play</span>
+              <span className='font-medium '>Play</span>
             </button>
-            <button className='flex gap-2 justify-center px-6 py-2 rounded-md  text-white bg-[#776A64]'>
+            <button className='flex gap-2 justify-center px-6 py-2 rounded-md  text-white  transition-all bg-[#776A64] hover:bg-[#736b67]'>
               <IoInformationCircleOutline className='text-2xl' />
-              <span className='font-medium'>Play</span>
+              <span className='font-medium'>Info</span>
             </button>
           </div>
         </div>

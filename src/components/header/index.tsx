@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import LogoImg from '../../assets/logo.png';
 import AvatarImg from '../../assets/avatar-img.webp';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -6,11 +6,12 @@ import { auth } from '../../services/firebaseConfig';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../../store/userSlice';
 import { useNavigate } from 'react-router-dom';
+
 export const Header = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-
+  const user = useSelector((state) => state?.user);
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
 
@@ -50,9 +51,12 @@ export const Header = () => {
     dispatch(logout());
   };
   return (
-    <div className='w-full absolute flex justify-between' ref={dropdownRef}>
+    <div
+      className='w-full absolute flex justify-between z-20'
+      ref={dropdownRef}
+    >
       <img
-        className=' top-0 left-0 w-40 mt-4 ml-4 z-10'
+        className=' top-0 left-0 w-40 mt-4 ml-4 z-20'
         src={LogoImg}
         alt='Logo'
         width={190}
@@ -64,11 +68,12 @@ export const Header = () => {
             className='w-12 h-12 mt-4 mr-4 cursor-pointer'
             src={AvatarImg}
             onClick={() => {
+              console.log('Setting dropdown ', !isDropdownOpen);
               setIsDropdownOpen(!isDropdownOpen);
             }}
           ></img>
           {isDropdownOpen && (
-            <div className='absolute top-16 pt-1 right-0 bg-white px-2'>
+            <div className='absolute top-16 pt-1 right-0  px-2'>
               <div className='z-10 text-white bg-red-500 border border-red divide-y divide-gray-100 rounded-md  shadow w-44 dark:bg-gray-700'>
                 <button
                   onClick={signOut}

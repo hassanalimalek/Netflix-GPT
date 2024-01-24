@@ -6,29 +6,56 @@ import Hero from '../hero';
 import MovieList from '../movieList';
 
 export const Browse = () => {
-  const movies = useSelector((state: any) => state.movies);
   const nowPlayingMovies = useSelector(
-    (state: any) => state.movies.nowPlayingMovies // Update state type
+    (state: any) => state.movies.nowPlayingMovies
   );
-  console.log('nowPlayingMovies -->,', nowPlayingMovies);
+  const popularMovies = useSelector((state: any) => state.movies.popularMovies);
+  const topRatedMovies = useSelector(
+    (state: any) => state.movies.topRatedMovies
+  );
+  const upcomingMovies = useSelector(
+    (state: any) => state.movies.upcomingMovies
+  );
 
-  //   console.log('movies -->', movies);
-  //   console.log(' mainHeaderMovieTrailerData -->', mainHeaderMovieTrailerData);
-  //   console.log('nowPlayingMovies -->', nowPlayingMovies?.[0]?.id);
-  const headerMovieId = nowPlayingMovies?.[0]?.id; //   console.log('headerMovieId -->', headerMovieId);
   const mainHeaderMovie = nowPlayingMovies?.[0];
+  const headerMovieId = mainHeaderMovie?.id;
   console.log('mainHeaderMovie -->', mainHeaderMovie);
 
+  // Fetching main header movie trailer
+  useFetch(
+    `https://api.themoviedb.org/3/movie/${
+      headerMovieId || 0
+    }/videos?language=en-US`,
+    setMainHeaderMovieTrailer,
+    null,
+    'results'
+  );
+  // Fetching upcoming movies
+  useFetch(
+    'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1',
+    setMovies,
+    'upcomingMovies',
+    'results'
+  );
+  // Fetching now playing movies
   useFetch(
     'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1',
     setMovies,
     'nowPlayingMovies',
     'results'
   );
+  // Fetching popular movies
   useFetch(
-    `https://api.themoviedb.org/3/movie/${headerMovieId}/videos?language=en-US`,
-    setMainHeaderMovieTrailer,
-    null,
+    'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1',
+    setMovies,
+    'popularMovies',
+    'results'
+  );
+  // Fetching top rated movies
+  useFetch(
+    'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1',
+    setMovies,
+    'topRatedMovies',
     'results'
   );
 
@@ -38,11 +65,12 @@ export const Browse = () => {
       <div>
         <Hero mainHeaderMovieData={mainHeaderMovie} />
       </div>
-      <div className=' bg-black'>
+      <div className=' bg-gray-950'>
         <div className='-mt-52 relative z-20 pl-4 text-white '>
+          <MovieList title='Upcoming Movies' movieData={upcomingMovies} />
           <MovieList title='Now Playing' movieData={nowPlayingMovies} />
-          <MovieList title='Trending Movies' movieData={nowPlayingMovies} />
-          <MovieList title='Now Playing' movieData={nowPlayingMovies} />
+          <MovieList title='Popular Movies' movieData={popularMovies} />
+          <MovieList title='Top Rated' movieData={topRatedMovies} />
         </div>
       </div>
     </div>
