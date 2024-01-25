@@ -1,7 +1,7 @@
-import { Browse } from '../pages/browse';
-import { Login } from '../pages/login';
-import { createBrowserRouter } from 'react-router-dom';
-export const router = createBrowserRouter([
+// routes.js
+import { Login, Browse, SearchGptPage } from '@/pages';
+
+export const routes = [
   {
     path: '/login',
     element: <Login />,
@@ -10,4 +10,8 @@ export const router = createBrowserRouter([
     path: '/',
     element: <Browse />,
   },
-]);
+  {
+    path: '/searchgpt',
+    element: <SearchGptPage />,
+  },
+];

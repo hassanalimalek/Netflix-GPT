@@ -2,15 +2,16 @@ import { useEffect, useRef, useState } from 'react';
 import LogoImg from '@/assets/logo.png';
 import AvatarImg from '@/assets/avatar-img.webp';
 import { onAuthStateChanged } from 'firebase/auth';
-
 import { auth } from '@/services/firebaseConfig';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '@/store/userSlice';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { FaSearch } from 'react-icons/fa';
 
 export const Header = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+
   const user = useSelector((state) => state?.user);
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
 
@@ -32,8 +33,6 @@ export const Header = () => {
   useEffect(() => {
     const authFunc = onAuthStateChanged(auth, (user) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        console.log('user', user);
         dispatch(
           login({
             email: user?.email,
@@ -41,7 +40,9 @@ export const Header = () => {
             displayName: user?.displayName,
           })
         );
-        navigate('/');
+        navigate(
+          (location.pathname === '/login' ? '/' : location.pathname) || '/'
+        );
       } else {
         navigate('/login');
       }
@@ -69,9 +70,29 @@ export const Header = () => {
         height={160}
       />
       {user && (
-        <>
+        <div className='flex items-center justify-center gap-6 pr-4'>
+          {location.pathname == '/searchgpt' ? (
+            <button
+              className='text-white flex items-center gap-2 justify-center px-4 py-1 rounded-sm transition-all bg-[#D72634] hover:bg-[#e03d4b]'
+              onClick={() => {
+                navigate('/');
+              }}
+            >
+              Home
+            </button>
+          ) : (
+            <button
+              className='text-white flex items-center gap-2 justify-center px-4 py-1 rounded-sm transition-all bg-[#77A99C] hover:bg-[#63988a]'
+              onClick={() => {
+                navigate('/searchgpt');
+              }}
+            >
+              <FaSearch /> Search via GPT
+            </button>
+          )}
+
           <img
-            className='w-12 h-12 mt-4 mr-4 cursor-pointer'
+            className='w-12 h-12  cursor-pointer rounded-sm'
             src={AvatarImg}
             onClick={() => {
               console.log('Setting dropdown ', !isDropdownOpen);
@@ -90,7 +111,7 @@ export const Header = () => {
               </div>
             </div>
           )}
-        </>
+        </div>
       )}
     </div>
   );

@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
 import useFetch from '@/services/useFetch';
 import { setMainHeaderMovieTrailer, setMovies } from '@/store/moviesSlice';
-import { Header } from '@/components/header';
 import Hero from '@/components/hero';
 import MovieList from '@/components/movieList';
 
@@ -60,8 +59,7 @@ export const Browse = () => {
   );
 
   return (
-    <div>
-      <Header />
+    <>
       <div>
         <Hero mainHeaderMovieData={mainHeaderMovie} />
       </div>
@@ -73,6 +71,6 @@ export const Browse = () => {
           <MovieList title='Top Rated' movieData={topRatedMovies} />
         </div>
       </div>
-    </div>
+    </>
   );
 };

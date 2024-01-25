@@ -1,4 +1,3 @@
-import { Header } from '@/components/header';
 import LoginBgImg from '@/assets/login_bg.jpg';
 import { useRef, useState } from 'react';
 import { validateSignInData, validateSignUpData } from '@/util/general';
@@ -22,6 +21,8 @@ export const Login = () => {
     const email = emailRef.current?.value;
     const password = passwordRef.current?.value;
     const username = usernameRef.current?.value;
+    console.log('email-->', email);
+    console.log('password-->', password);
     // Signing In
     if (formMode === 'signin') {
       const validity = validateSignInData(
@@ -101,7 +102,6 @@ export const Login = () => {
   };
   return (
     <div>
-      <Header />
       <div className='absolute min-h-lvh'>
         <img src={LoginBgImg} className='brightness-50 min-h-screen'></img>
       </div>
