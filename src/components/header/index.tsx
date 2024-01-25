@@ -60,7 +60,7 @@ export const Header = () => {
   return (
     <div
       className='bg-black md:bg-transparent w-full absolute flex items-center justify-between z-20'
-      ref={dropdownRef}
+      ref={dropdownRef as React.RefObject<HTMLDivElement>}
     >
       <img
         className=' top-0 left-0 w-32 md:w-40 mt-4 ml-4 z-20'
