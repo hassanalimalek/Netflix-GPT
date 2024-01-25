@@ -50,7 +50,7 @@ const SearchGPT = () => {
 
   return (
     <div className='mt-8'>
-      <div className='bg-gray-950  mb-8 p-4   m-auto w-3/6 text-white rounded-md'>
+      <div className='bg-gray-950  p-4  m-auto  mx-4   md:m-auto  md:w-3/6 mb-8 md:mb-8 text-white rounded-md'>
         {/* Search  */}
         <form onSubmit={handleSearch} className='m-auto  flex justify-center'>
           <input
@@ -67,19 +67,25 @@ const SearchGPT = () => {
           </button>
         </form>
       </div>
-      <div className='p-8 w-[90%] max-w-8xl m-auto'>
-        <ListingGrid
-          loading={loading}
-          items={moviesData}
-          loadingSekeletonItems={12}
-          renderItem={(item) => {
-            return (
-              <MovieCard
-                imageUrl={`${TMDB_IMAGE_BASE_URL + item.poster_path}`}
-              />
-            );
-          }}
-        />
+      <div className='bg-black '>
+        <div
+          className={`${
+            loading || moviesData.length ? 'p-8 ' : 'p-0'
+          } w-[90%] max-w-8xl m-auto `}
+        >
+          <ListingGrid
+            loading={loading}
+            items={moviesData}
+            loadingSekeletonItems={12}
+            renderItem={(item) => {
+              return (
+                <MovieCard
+                  imageUrl={`${TMDB_IMAGE_BASE_URL + item.poster_path}`}
+                />
+              );
+            }}
+          />
+        </div>
       </div>
     </div>
   );

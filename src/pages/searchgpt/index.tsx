@@ -7,7 +7,7 @@ export const SearchGptPage = () => {
       <div className='absolute min-h-lvh z-[-20]'>
         <img src={LoginBgImg} className='brightness-50 min-h-screen'></img>
       </div>
-      <div className='pt-20'>
+      <div className='pt-20 '>
         <SearchGPT />
       </div>
     </div>

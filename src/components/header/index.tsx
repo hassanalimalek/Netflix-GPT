@@ -59,18 +59,18 @@ export const Header = () => {
   };
   return (
     <div
-      className='w-full absolute flex justify-between z-20'
+      className='bg-black sm:bg-transparent w-full absolute flex items-center justify-between z-20'
       ref={dropdownRef}
     >
       <img
-        className=' top-0 left-0 w-40 mt-4 ml-4 z-20'
+        className=' top-0 left-0 w-32 md:w-40 mt-4 ml-4 z-20'
         src={LogoImg}
         alt='Logo'
         width={190}
         height={160}
       />
       {user && (
-        <div className='flex items-center justify-center gap-6 pr-4'>
+        <div className='mt-3 md:mt-0 flex items-center justify-center gap-6 pr-4 '>
           {location.pathname == '/searchgpt' ? (
             <button
               className='text-white flex items-center gap-2 justify-center px-4 py-1 rounded-sm transition-all bg-[#D72634] hover:bg-[#e03d4b]'
@@ -82,17 +82,18 @@ export const Header = () => {
             </button>
           ) : (
             <button
-              className='text-white flex items-center gap-2 justify-center px-4 py-1 rounded-sm transition-all bg-[#77A99C] hover:bg-[#63988a]'
+              className='text-white flex items-center gap-2 justify-center px-4 py-2 rounded-sm transition-all bg-[#77A99C] hover:bg-[#63988a]'
               onClick={() => {
                 navigate('/searchgpt');
               }}
             >
-              <FaSearch /> Search via GPT
+              <FaSearch />
+              <span className='hidden md:block'> Search via GPT</span>
             </button>
           )}
 
           <img
-            className='w-12 h-12  cursor-pointer rounded-sm'
+            className='w-8 h-8 md:w-12 md:h-12  cursor-pointer rounded-sm'
             src={AvatarImg}
             onClick={() => {
               console.log('Setting dropdown ', !isDropdownOpen);

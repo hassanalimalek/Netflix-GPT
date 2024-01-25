@@ -64,7 +64,7 @@ export const Browse = () => {
         <Hero mainHeaderMovieData={mainHeaderMovie} />
       </div>
       <div className=' bg-gray-950'>
-        <div className='-mt-52 relative z-20 pl-4 text-white '>
+        <div className='md:-mt-0 xl:-mt-52 relative z-20 pl-4 text-white '>
           <MovieList title='Upcoming Movies' movieData={upcomingMovies} />
           <MovieList title='Now Playing' movieData={nowPlayingMovies} />
           <MovieList title='Popular Movies' movieData={popularMovies} />
