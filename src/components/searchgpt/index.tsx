@@ -17,31 +17,39 @@ const fetchTmdbMovieSuggestion = async (query: string) => {
 const SearchGPT = () => {
   const searchQueryRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>('');
   const [moviesData, setMoviesData] = useState<any[]>([]);
-  console.log('moviesData -->', moviesData);
+
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     const searchQuery = searchQueryRef.current?.value;
     if (searchQuery) {
       try {
         setLoading(true);
+        setErrorMessage(null);
         // Making a call to openAI API
         const result = await chatCompletion(searchQuery);
-        const moviesArr = result?.split(',');
-        // Making a call to TMDB API
-        const moviesResponsePromises = moviesArr?.map((item) => {
-          return fetchTmdbMovieSuggestion(item);
-        });
-        // Resolving all promises
-        if (moviesResponsePromises) {
-          const finalResult = await Promise.all(moviesResponsePromises);
-          const filteredResult = finalResult.map((item) => {
-            return item.results[0];
+
+        if (result != 'null') {
+          const moviesArr = result?.split(',');
+          // Making a call to TMDB API
+          const moviesResponsePromises = moviesArr?.map((item) => {
+            return fetchTmdbMovieSuggestion(item);
           });
-          setMoviesData(filteredResult);
+          // Resolving all promises
+          if (moviesResponsePromises) {
+            const finalResult = await Promise.all(moviesResponsePromises);
+            const filteredResult = finalResult.map((item) => {
+              return item.results[0];
+            });
+            setMoviesData(filteredResult);
+          }
+        } else {
+          throw new Error('Sorry unable to suggest on your query');
         }
-      } catch (e) {
-        console.log('error -->', e);
+      } catch (e: any) {
+        setErrorMessage(e?.message);
+        setMoviesData([]);
       } finally {
         setLoading(false);
       }
@@ -73,18 +81,24 @@ const SearchGPT = () => {
             loading || moviesData.length ? 'p-8 ' : 'p-0'
           } w-[90%] max-w-8xl m-auto `}
         >
-          <ListingGrid
-            loading={loading}
-            items={moviesData}
-            loadingSekeletonItems={12}
-            renderItem={(item) => {
-              return (
-                <MovieCard
-                  imageUrl={`${TMDB_IMAGE_BASE_URL + item.poster_path}`}
-                />
-              );
-            }}
-          />
+          {errorMessage ? (
+            <p className='text-red-500 text-xl text-center p-8 '>
+              {errorMessage}
+            </p>
+          ) : (
+            <ListingGrid
+              loading={loading}
+              items={moviesData}
+              loadingSekeletonItems={12}
+              renderItem={(item) => {
+                return (
+                  <MovieCard
+                    imageUrl={`${TMDB_IMAGE_BASE_URL + item.poster_path}`}
+                  />
+                );
+              }}
+            />
+          )}
         </div>
       </div>
     </div>

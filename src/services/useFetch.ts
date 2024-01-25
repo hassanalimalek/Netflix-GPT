@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getTmdbAPIOptions } from '@/config/tmdbAPIOptions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 type FetchState<T> = {
   data: T | null;
@@ -13,12 +13,14 @@ const useFetch = <T>(
   dispatchAction,
   payloadKey: string | null,
   responseDataKey?: string,
+  slice?: string,
   options?: unknown
 ): FetchState<T> => {
   const dispatch = useDispatch();
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
+  const storeState = useSelector((state) => state);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,6 +30,7 @@ const useFetch = <T>(
           throw new Error('Network Error');
         }
         const responseData = await response.json();
+
         if (dispatchAction && payloadKey) {
           dispatch(
             dispatchAction({
@@ -45,14 +48,20 @@ const useFetch = <T>(
         }
 
         setData(responseData);
-      } catch (error) {
+      } catch (error: any) {
         setError(error);
       } finally {
         setLoading(false);
       }
     };
-
-    fetchData();
+    if (
+      !slice ||
+      !payloadKey ||
+      !storeState ||
+      !storeState[slice]?.[payloadKey]
+    ) {
+      fetchData();
+    }
   }, [url]);
 
   return { data, loading, error };

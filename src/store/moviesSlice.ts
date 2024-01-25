@@ -7,10 +7,10 @@ const moviesSlice = createSlice({
   initialState,
   reducers: {
     setMovies: (state, action) => {
-      //   console.log('setmovies action', action);
       return { ...state, ...action.payload };
     },
     setMainHeaderMovieTrailer: (state, action) => {
+      action.payload = action.payload.mainHeaderMovieTrailerData;
       const movieTrailers = action.payload.filter(
         (movie) => movie.type === 'Trailer'
       );

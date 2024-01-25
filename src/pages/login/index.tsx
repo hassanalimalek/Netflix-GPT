@@ -21,8 +21,7 @@ export const Login = () => {
     const email = emailRef.current?.value;
     const password = passwordRef.current?.value;
     const username = usernameRef.current?.value;
-    console.log('email-->', email);
-    console.log('password-->', password);
+
     // Signing In
     if (formMode === 'signin') {
       const validity = validateSignInData(
@@ -77,9 +76,8 @@ export const Login = () => {
                   setFormMode('signin');
                   clearInputs();
                 })
-                .catch(function (error) {
-                  console.log('Error -->', error);
-                  // An error happened.
+                .catch(function (error: any) {
+                  toast.error(error?.message);
                 })
                 .finally(() => {
                   setLoading(false);

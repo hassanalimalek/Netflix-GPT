@@ -6,7 +6,6 @@ function validateSignUpData(
   const usernameRegex = /^.{8,16}$/;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const passwordRegex = /^.{8,}$/;
-  console.log('username -->', username);
 
   if (!email && !emailRegex.test(email as string)) {
     return 'Invalid email address.';

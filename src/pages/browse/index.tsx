@@ -18,7 +18,6 @@ export const Browse = () => {
 
   const mainHeaderMovie = nowPlayingMovies?.[0];
   const headerMovieId = mainHeaderMovie?.id;
-  console.log('mainHeaderMovie -->', mainHeaderMovie);
 
   // Fetching main header movie trailer
   useFetch(
@@ -26,15 +25,17 @@ export const Browse = () => {
       headerMovieId || 0
     }/videos?language=en-US`,
     setMainHeaderMovieTrailer,
-    null,
-    'results'
+    'mainHeaderMovieTrailerData',
+    'results',
+    'movies'
   );
   // Fetching upcoming movies
   useFetch(
     'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1',
     setMovies,
     'upcomingMovies',
-    'results'
+    'results',
+    'movies'
   );
   // Fetching now playing movies
   useFetch(

@@ -12,11 +12,11 @@ export const Header = () => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const user = useSelector((state) => state?.user);
+  const user = useSelector((state: any) => state?.user);
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
 
   const navigate = useNavigate();
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -59,7 +59,7 @@ export const Header = () => {
   };
   return (
     <div
-      className='bg-black sm:bg-transparent w-full absolute flex items-center justify-between z-20'
+      className='bg-black md:bg-transparent w-full absolute flex items-center justify-between z-20'
       ref={dropdownRef}
     >
       <img
@@ -96,7 +96,6 @@ export const Header = () => {
             className='w-8 h-8 md:w-12 md:h-12  cursor-pointer rounded-sm'
             src={AvatarImg}
             onClick={() => {
-              console.log('Setting dropdown ', !isDropdownOpen);
               setIsDropdownOpen(!isDropdownOpen);
             }}
           ></img>

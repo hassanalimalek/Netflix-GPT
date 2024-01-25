@@ -6,7 +6,6 @@ export default function Hero({ mainHeaderMovieData }) {
     (state: any) => state.movies.mainHeaderMovieTrailerData
   );
 
-  if (!mainHeaderMovieData) return null;
   return (
     <div>
       <div className='absolute top-[5%] md:top-0 pt-[20%] px-12 text-white   bg-gradient-to-r from-black w-screen aspect-video'>
