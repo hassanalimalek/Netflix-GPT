@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import LogoImg from '../../assets/logo.png';
-import AvatarImg from '../../assets/avatar-img.webp';
+import LogoImg from '@/assets/logo.png';
+import AvatarImg from '@/assets/avatar-img.webp';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../../services/firebaseConfig';
+
+import { auth } from '@/services/firebaseConfig';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { login, logout } from '../../store/userSlice';
+import { login, logout } from '@/store/userSlice';
 import { useNavigate } from 'react-router-dom';
 
 export const Header = () => {
@@ -28,7 +30,7 @@ export const Header = () => {
     };
   }, []);
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const authFunc = onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
         console.log('user', user);
@@ -44,6 +46,10 @@ export const Header = () => {
         navigate('/login');
       }
     });
+    // Used to change auth state when component unmounts
+    return () => {
+      authFunc();
+    };
   }, []);
 
   const signOut = () => {

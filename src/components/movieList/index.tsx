@@ -1,6 +1,7 @@
 import React from 'react';
-import MovieCard from '../movieCard';
-import { TMDB_IMAGE_BASE_URL } from '../../config/constants';
+import MovieCard from '@/components/movieCard';
+
+import { TMDB_IMAGE_BASE_URL } from '@/config/constants';
 
 interface MovieListProps {
   title: string;

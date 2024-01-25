@@ -1,12 +1,12 @@
-import { Header } from '../header';
-import LoginBgImg from '../../assets/login_bg.jpg';
+import { Header } from '@/components/header';
+import LoginBgImg from '@/assets/login_bg.jpg';
 import { useRef, useState } from 'react';
-import { validateSignInData, validateSignUpData } from '../../util/general';
+import { validateSignInData, validateSignUpData } from '@/util/general';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { auth } from '../../services/firebaseConfig';
+import { auth } from '@/services/firebaseConfig';
 import toast from 'react-hot-toast';
 import { updateProfile } from 'firebase/auth';
 

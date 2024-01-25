@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getTmdbAPIOptions } from '../config/tmdbAPIOptions';
+import { getTmdbAPIOptions } from '@/config/tmdbAPIOptions';
 import { useDispatch } from 'react-redux';
 
 type FetchState<T> = {

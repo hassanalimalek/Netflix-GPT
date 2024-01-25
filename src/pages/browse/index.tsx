@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
-import useFetch from '../../services/useFetch';
-import { setMainHeaderMovieTrailer, setMovies } from '../../store/moviesSlice';
-import { Header } from '../header';
-import Hero from '../hero';
-import MovieList from '../movieList';
+import useFetch from '@/services/useFetch';
+import { setMainHeaderMovieTrailer, setMovies } from '@/store/moviesSlice';
+import { Header } from '@/components/header';
+import Hero from '@/components/hero';
+import MovieList from '@/components/movieList';
 
 export const Browse = () => {
   const nowPlayingMovies = useSelector(
