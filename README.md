@@ -1,4 +1,4 @@
-** Netflix GPT: Unleash Your Movie Search with AI **
+## Netflix GPT: Unleash Your Movie Search with AI
 
 ** Find the perfect movie with the power of GPT and TMDb! **
 
