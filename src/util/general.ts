@@ -2,41 +2,41 @@ function validateSignUpData(
   username: string | undefined,
   email: string | undefined,
   password: string | undefined
-): string | null {
+): string | boolean {
   const usernameRegex = /^.{8,16}$/;
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^\S+@\S+\.\S+$/;
   const passwordRegex = /^.{8,}$/;
 
-  if (!email && !emailRegex.test(email as string)) {
+  if (!email || !emailRegex.test(email as string)) {
     return 'Invalid email address.';
   }
-  if (!username && !usernameRegex.test(username as string)) {
+  if (!username || !usernameRegex.test(username as string)) {
     return 'Username must be 8-16 characters.';
   }
 
-  if (!password && !passwordRegex.test(password as string)) {
+  if (!password || !passwordRegex.test(password as string)) {
     return 'Password must be at least 8 characters.';
   }
 
-  return null; // Return null if all validations pass
+  return true;
 }
 
 function validateSignInData(
   email: string | undefined,
   password: string | undefined
-): string | null {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+): string | boolean {
+  const emailRegex = /^\S+@\S+\.\S+$/;
   const passwordRegex = /^.{8,}$/;
 
-  if (email && !emailRegex.test(email)) {
+  if (!email || !emailRegex.test(email)) {
     return 'Invalid email address.';
   }
 
-  if (password && !passwordRegex.test(password)) {
+  if (!password || !passwordRegex.test(password)) {
     return 'Password must be at least 8 characters.';
   }
 
-  return null; // Return null if all validations pass
+  return true;
 }
 
 export { validateSignUpData, validateSignInData };

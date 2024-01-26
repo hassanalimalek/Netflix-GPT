@@ -13,6 +13,7 @@ export const Header = () => {
   const location = useLocation();
 
   const user = useSelector((state: any) => state?.user);
+
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
 
   const navigate = useNavigate();
@@ -100,14 +101,31 @@ export const Header = () => {
             }}
           ></img>
           {isDropdownOpen && (
-            <div className='absolute top-16 pt-1 right-0  px-2'>
-              <div className='z-10 text-white bg-red-500 border border-red divide-y divide-gray-100 rounded-md  shadow w-44 dark:bg-gray-700'>
-                <button
-                  onClick={signOut}
-                  className='w-full block px-4 py-2 hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'
-                >
-                  Sign Out
-                </button>
+            <div className='absolute top-16 pt-2 right-0 px-2 w-72'>
+              <div
+                id='dropdownInformation'
+                className='z-10 w-full  bg-white divide-y divide-gray-100 rounded-lg shadow  dark:bg-gray-700 dark:divide-gray-600'
+              >
+                <div className='px-4 py-3 text-sm text-gray-900 dark:text-white'>
+                  <div className='font-semibold text-md'>
+                    {user?.displayName}
+                  </div>
+                  <div
+                    className='font-medium text-wrap'
+                    style={{ overflowWrap: 'break-word' }}
+                  >
+                    {user?.email}
+                  </div>
+                </div>
+
+                <div className='py-2'>
+                  <span
+                    onClick={signOut}
+                    className='block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'
+                  >
+                    Sign out
+                  </span>
+                </div>
               </div>
             </div>
           )}

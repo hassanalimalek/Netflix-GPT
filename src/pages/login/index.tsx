@@ -11,7 +11,7 @@ import { updateProfile } from 'firebase/auth';
 
 export const Login = () => {
   const [formMode, setFormMode] = useState<'signin' | 'signup'>('signin');
-  const [errorMessage, setErrorMessage] = useState<string | null>('');
+  const [errorMessage, setErrorMessage] = useState<string | boolean>('');
   const [loading, setLoading] = useState<boolean>(false);
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -24,12 +24,9 @@ export const Login = () => {
 
     // Signing In
     if (formMode === 'signin') {
-      const validity = validateSignInData(
-        emailRef.current?.value,
-        passwordRef.current?.value
-      );
+      const validity = validateSignInData(email, password);
       setErrorMessage(validity);
-      if (validity === null) {
+      if (validity) {
         setLoading(true);
         signInWithEmailAndPassword(auth, email as string, password as string)
           .then(() => {
@@ -47,14 +44,10 @@ export const Login = () => {
     }
     // Signing Up
     else {
-      const validity = validateSignUpData(
-        usernameRef.current?.value,
-        emailRef.current?.value,
-        passwordRef.current?.value
-      );
+      const validity = validateSignUpData(username, email, password);
 
-      if (validity === null) {
-        setErrorMessage(null);
+      if (validity === true) {
+        setErrorMessage(false);
         setLoading(true);
         createUserWithEmailAndPassword(
           auth,
@@ -65,16 +58,16 @@ export const Login = () => {
           .then((userCredential) => {
             // Signed up
             const userSignedUp = userCredential.user;
+
             if (userSignedUp) {
               updateProfile(userSignedUp, {
                 displayName: username,
               })
                 .then(() => {
                   // Update successful.
-                  toast.success('Successfully Signed up!');
-
-                  setFormMode('signin');
                   clearInputs();
+                  toast.success('Successfully Signed up!');
+                  setFormMode('signin');
                 })
                 .catch(function (error: any) {
                   toast.error(error?.message);
@@ -93,11 +86,19 @@ export const Login = () => {
       }
     }
   };
+
   const clearInputs = () => {
-    usernameRef.current!.value = '';
-    passwordRef.current!.value = '';
-    emailRef.current!.value = '';
+    if (usernameRef.current) {
+      usernameRef.current.value = '';
+    }
+    if (passwordRef.current) {
+      passwordRef.current.value = '';
+    }
+    if (emailRef.current) {
+      emailRef.current.value = '';
+    }
   };
+
   return (
     <div>
       <div className='absolute min-h-lvh'>
