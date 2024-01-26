@@ -21,6 +21,9 @@
 - **TMDb API ️<img width="15" src="https://user-images.githubusercontent.com/25181517/192107858-fe19f043-c502-4009-8c47-476fc89718ad.png" alt="REST" title="REST"/>:** Accessing a treasure trove of movie data
 - **GPT (ChatGPT) :** Unlocking context-aware AI search
 
+**Demo**
+https://netflix-gpt-sable-xi.vercel.app/login
+
 **UI** 
 
 <img width="1440" alt="Screenshot 2024-01-26 at 6 59 07 AM" src="https://github.com/hassanalimalek/Netflix-GPT/assets/69761391/524da047-ec93-471c-b7ce-81340f13d224">
