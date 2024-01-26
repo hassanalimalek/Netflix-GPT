@@ -6,8 +6,8 @@
 
 - **GPT-Powered Search 🔎:** Get tailored movie suggestions based on detailed queries like "mind-bending sci-fi thrillers" or "heartwarming rom-coms set in Paris"
 - **TMDb Integration :** Explore a vast library of movies with comprehensive details from The Movie Database
-- **Secure Account Creation https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/Firebase-Dark.svg:** Sign up and log in effortlessly using your Google account
-- **Sleek and Responsive Design :** Enjoy a seamless experience across devices thanks to Tailwind CSS
+- **Secure Account Creation  Sign up and log in effortlessly using your Google account
+- **Sleek and Responsive Design https://user-images.githubusercontent.com/25181517/202896760-337261ed-ee92-4979-84c4-d4b829c7355d.png :** Enjoy a seamless experience across devices thanks to Tailwind CSS
 - **Efficient State Management :** Zustand and React-Redux keep your app's data organized and performant ⚡
 
 **Tech Stack:**
